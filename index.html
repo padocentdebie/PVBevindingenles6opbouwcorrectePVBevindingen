@@ -7,41 +7,37 @@
         :root { --police-blue: #1c2b4a; --text-gray: #334155; --border-color: #cbd5e1; --success-green: #10b981; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: var(--text-gray); margin: 0; padding: 40px; }
         
-        /* Login */
         .login-container { max-width: 400px; margin: 60px auto; background: white; padding: 40px; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         h2 { color: var(--police-blue); font-weight: 600; margin-top: 0; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
         input, select { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
         
-        /* Layout */
         .main-content { display: grid; grid-template-columns: 480px 1fr; gap: 40px; max-width: 1500px; margin: 0 auto; }
         .hidden { display: none !important; }
 
-        /* Instructie */
-        .instruction-box { grid-column: 1 / -1; background: white; padding: 25px; margin-bottom: 30px; border: 1px solid var(--border-color); border-left: 5px solid var(--police-blue); line-height: 1.6; font-size: 1.05rem; }
+        .instruction-box { grid-column: 1 / -1; background: white; padding: 25px; margin-bottom: 30px; border: 1px solid var(--border-color); border-left: 5px solid var(--police-blue); line-height: 1.6; }
         
-        /* Kolommen */
         .source-list { background: #eff6ff; padding: 25px; border: 1px solid var(--border-color); border-radius: 4px; min-height: 900px; }
-        .draggable-item { background: white; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 25px; border-radius: 4px; font-size: 0.95rem; line-height: 1.7; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .draggable-item { background: white; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 25px; border-radius: 4px; font-size: 0.95rem; line-height: 1.7; }
         .locked { border-left: 5px solid #ef4444; }
         .unlocked { border-left: 5px solid var(--success-green); cursor: grab; }
         
         .target-zones { display: flex; flex-direction: column; gap: 20px; }
-        .drop-zone { background: white; border: 2px dashed var(--border-color); padding: 40px 25px; border-radius: 4px; position: relative; min-height: 120px; transition: all 0.2s; }
+        .drop-zone { background: white; border: 2px dashed var(--border-color); padding: 40px 25px; border-radius: 4px; position: relative; min-height: 120px; }
         .drop-zone-label { font-weight: bold; color: var(--police-blue); margin-bottom: 15px; display: block; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.9rem; }
         .correct-drop { border: 2px solid var(--success-green); background: #f0fdf4; }
 
-        /* Leaderboard */
         .leaderboard { grid-column: 1 / -1; margin-top: 50px; background: white; padding: 30px; border: 1px solid var(--border-color); border-radius: 4px; }
         .leader-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .leader-table th, .leader-table td { text-align: left; padding: 15px; border-bottom: 1px solid #edf2f7; }
         .progress-bar { background: #edf2f7; height: 10px; border-radius: 5px; width: 100%; max-width: 300px; }
-        .progress-fill { background: var(--success-green); height: 100%; border-radius: 5px; transition: width 0.5s ease-in-out; }
+        .progress-fill { background: var(--success-green); height: 100%; border-radius: 5px; transition: width 0.5s; }
 
-        /* Interactie */
+        .correctiemodel-box { grid-column: 1 / -1; margin-top: 20px; padding: 20px; background: #f1f5f9; border-radius: 4px; display: none; }
+        .btn-model { background: none; border: 1px dashed var(--police-blue); color: var(--police-blue); cursor: pointer; padding: 5px 10px; font-size: 0.8rem; margin-top: 10px; }
+
         .btn { background: var(--police-blue); color: white; padding: 14px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1rem; width: 100%; font-weight: 600; }
         textarea { width: 100%; height: 100px; margin-top: 20px; border: 1px solid var(--border-color); padding: 15px; box-sizing: border-box; resize: none; font-family: inherit; font-size: 0.9rem; border-radius: 4px; }
-        textarea:focus { outline: 2px solid var(--police-blue); border-color: transparent; }
     </style>
 </head>
 <body>
@@ -66,11 +62,10 @@
 <div id="exercise-screen" class="main-content hidden">
     <div class="instruction-box">
         <strong>Instructie: Proces-verbaal Analyse & Individualisering</strong><br>
-        De onderstaande teksten uit de Casus Drachten bevatten stijlfouten, onjuiste "wij-vormen" en vage tijdsaanduidingen. Dit is niet toegestaan in een officieel proces-verbaal.<br><br>
-        1. <strong>Analyseer:</strong> Spoor de foutieve zin of vage handeling op in de alinea.<br>
-        2. <strong>Individualiseer:</strong> Herschrijf de betreffende zin in de ik-vorm met de verplichte tussenwerping: <i>ik, verbalisant [Je Naam], ...</i><br>
-        3. <strong>Factualiseer:</strong> Zorg dat bij handelingen (vorderen/opmaken) de exacte <strong>dag, datum en tijd</strong> worden vermeld.<br>
-        4. <strong>Categoriseer:</strong> Pas als de zin correct is, wordt het blokje groen. Sleep het naar de juiste fase van het ASTMA-model.
+        1. <strong>Analyseer:</strong> Spoor de foutieve zin, vage tijdsaanduiding of onjuiste tijdsvorm op.<br>
+        2. <strong>Verleden tijd:</strong> Let op! Veranderlijke zaken (zoals sneeuw) moeten in de <strong>verleden tijd</strong>.<br>
+        3. <strong>Herschrijf:</strong> Gebruik de vorm: <i>ik, verbalisant [Je Naam], ...</i><br>
+        4. <strong>Indelen:</strong> Sleep het groene blok naar de juiste ASTMA-fase.
     </div>
 
     <div id="chaos-column" class="source-list">
@@ -79,20 +74,25 @@
 
     <div class="target-zones">
         <div class="drop-zone" data-type="A"><span class="drop-zone-label">A - Aanleiding</span></div>
-        <div class="drop-zone" data-type="S"><span class="drop-zone-label">S - Situatie (Decor in vast: OTT veranderlijk : OVT)</span></div>
+        <div class="drop-zone" data-type="S"><span class="drop-zone-label">S - Situatie (Veranderlijk in OVT)</span></div>
         <div class="drop-zone" data-type="T"><span class="drop-zone-label">T - Toedracht (Waarneming in OVT)</span></div>
-        <div class="drop-zone" data-type="M"><span class="drop-zone-label">M - Maatregelen (Dwangmiddelen? Wie voert middelen uit? Dag datum tijd?)</span></div>
-        <div class="drop-zone" data-type="Af"><span class="drop-zone-label">A - Afhandeling</span></div>
+        <div class="drop-zone" data-type="M"><span class="drop-zone-label">M - Maatregelen (Datum/Tijd verplicht)</span></div>
+        <div class="drop-zone" data-type="Af"><span class="drop-zone-label">A - Afhandeling (Datum/Tijd verplicht)</span></div>
     </div>
 
     <div class="leaderboard">
         <h3 style="margin:0; color: var(--police-blue);">Live Leaderboard: <span id="class-display"></span></h3>
-        <table class="leader-table">
-            <thead>
-                <tr><th>Student</th><th>Voortgang</th><th>Status</th></tr>
-            </thead>
-            <tbody id="leader-body"></tbody>
-        </table>
+        <table class="leader-table"><tbody id="leader-body"></tbody></table>
+        
+        <button class="btn-model" onclick="toggleModel()">Toon Correctiemodel (Docent)</button>
+        <div id="correctiemodel" class="correctiemodel-box">
+            <strong>Antwoordsleutel:</strong><br>
+            A: "ik, verbalisant [Naam], kreeg opdracht om de melder op te bellen..."<br>
+            S: "ik, verbalisant [Naam], zag dat er sneeuw op de klinkers <u>lag</u>..."<br>
+            T: "ik, verbalisant [Naam], zag dat Stout geld aannam... realiseerde zich niet..."<br>
+            M: "ik, verbalisant [Naam], vorderde op maandag 9 maart om 11:15 uur..."<br>
+            Af: "ik, verbalisant [Naam], maakte op maandag 9 maart om 11:30 uur..."
+        </div>
     </div>
 </div>
 
@@ -110,73 +110,64 @@
     const db = getDatabase(app);
 
     const pvData = [
-        { id: 1, type: "A", text: "Op maandag 09 maart 2026 kregen wij, verbalisanten J. de VRIES en S. de JONG, aspirant-agenten eenheid Drachten Centrum, de melding Sportlaan 7. Wij kregen de opdracht om de melder op te telefoneren over de situatie. Wij reden in een herkenbaar dienstvoertuig.", check: ["ik, verbalisant", "opbel"] },
-        { id: 2, type: "S", text: "De parkeervakken bevinden zich aan de noordzijde van perceel Sportlaan 7 te Drachten. Ter plaatse ligt witte sneeuw op de klinkers. Wij zagen dat een zwarte personenauto, merk Volkswagen, type Golf, geparkeerd stond.", check: ["ik, verbalisant", "zag"] },
-        { id: 3, type: "T", text: "Ter plaatse sprak ik de melder aan. Deze vertelde dat hij geld en zakjes zag worden uitgewisseld tussen personen. Wij zagen dat de inzittende, J.J. STOUT, geld aannam. Stout leek zich niet te beseffen dat hij werd geobserveerd.", check: ["ik, verbalisant", "realise", "zag"] },
-        { id: 4, type: "M", text: "Stout maakte een zenuwachtige indruk en trilde met zijn handen. Kort daarna vorderden wij inzage in het identiteitsbewijs van de verdachte Stout. Vanwege de criminele misdaden uit het verleden hebben wij hem op grond van de Opiumwet onderzocht.", check: ["ik, verbalisant", "maandag", "09 maart", "11:", "vorderde"] },
+        { id: 1, type: "A", text: "Op maandag 09 maart 2026 kregen wij de melding Sportlaan 7. Wij kregen de opdracht om de melder op te telefoneren over de situatie. Wij reden in een herkenbaar dienstvoertuig.", check: ["ik, verbalisant", "opbel"] },
+        { id: 2, type: "S", text: "De parkeervakken bevinden zich aan de noordzijde van perceel Sportlaan 7 te Drachten. Ter plaatse ligt witte sneeuw op de klinkers. Wij zagen dat een zwarte personenauto, merk Volkswagen, type Golf, geparkeerd stond.", check: ["ik, verbalisant", "lag", "zag"] },
+        { id: 3, type: "T", text: "Ter plaatse sprak ik de melder aan. Deze vertelde dat hij geld en zakjes zag worden uitgewisseld. Wij zagen dat de inzittende, J.J. STOUT, geld aannam. Stout leek zich niet te beseffen dat hij werd geobserveerd.", check: ["ik, verbalisant", "realise", "zag"] },
+        { id: 4, type: "M", text: "Stout maakte een zenuwachtige indruk. Kort daarna vorderden wij inzage in het identiteitsbewijs van de verdachte Stout. Vanwege de criminele misdaden uit het verleden hebben wij hem onderzocht.", check: ["ik, verbalisant", "maandag", "09 maart", "11:", "vorderde"] },
         { id: 5, type: "Af", text: "De verdachte is ten spoedigste overgebracht naar het bureau Drachten. De USB-stick met beelden is voor altijd en eeuwig veiliggesteld. Wij maakten hiervan op ambtseed dit proces-verbaal op.", check: ["ik, verbalisant", "maandag", "09 maart", "11:", "maakte"] }
     ];
 
     let userPath = "";
-    let studentName = "";
-    let currentClass = "";
+
+    window.toggleModel = () => {
+        const m = document.getElementById('correctiemodel');
+        m.style.display = m.style.display === 'block' ? 'none' : 'block';
+    };
 
     window.startOefening = () => {
-        studentName = document.getElementById('student-name').value;
-        currentClass = document.getElementById('student-class').value;
-        if (!studentName) return alert("Vul uw naam in.");
+        const name = document.getElementById('student-name').value;
+        const klas = document.getElementById('student-class').value;
+        if (!name) return alert("Naam invullen.");
 
-        userPath = `ggp_sessie/${currentClass}/${studentName.replace(/\s+/g, '_')}`;
+        userPath = `ggp_sessie/${klas}/${name.replace(/\s+/g, '_')}`;
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('exercise-screen').classList.remove('hidden');
-        document.getElementById('class-display').innerText = currentClass.replace('_', ' ');
+        document.getElementById('class-display').innerText = klas.replace('_', ' ');
 
-        set(ref(db, userPath), { name: studentName, progress: 0, status: "Bezig" });
+        set(ref(db, userPath), { name: name, progress: 0 });
 
         const container = document.getElementById('chaos-column');
         pvData.sort(() => Math.random() - 0.5).forEach(item => {
             const div = document.createElement('div');
             div.className = 'draggable-item locked';
             div.id = `item-${item.id}`;
-            div.innerHTML = `<div>${item.text}</div><textarea placeholder="Typ hier de gecorrigeerde zin..."></textarea>`;
-            div.querySelector('textarea').oninput = (e) => valideer(e.target, item.id);
+            div.innerHTML = `<div>${item.text}</div><textarea oninput="valideer(this, ${item.id})"></textarea>`;
             container.appendChild(div);
         });
 
-        onValue(ref(db, `ggp_sessie/${currentClass}`), (snapshot) => {
-            const data = snapshot.val();
+        onValue(ref(db, `ggp_sessie/${klas}`), (snap) => {
+            const data = snap.val();
             const body = document.getElementById('leader-body');
             body.innerHTML = "";
-            if (data) {
-                Object.values(data).sort((a,b) => b.progress - a.progress).forEach(s => {
-                    body.innerHTML += `<tr><td>${s.name}</td><td><div class="progress-bar"><div class="progress-fill" style="width:${s.progress}%"></div></div></td><td>${s.progress === 100 ? '✅' : s.progress + '%'}</td></tr>`;
-                });
-            }
+            if (data) Object.values(data).sort((a,b)=>b.progress-a.progress).forEach(s => {
+                body.innerHTML += `<tr><td>${s.name}</td><td><div class="progress-bar"><div class="progress-fill" style="width:${s.progress}%"></div></div></td><td>${s.progress}%</td></tr>`;
+            });
         });
     };
 
     window.valideer = (el, id) => {
         const input = el.value.toLowerCase().trim();
         const item = pvData.find(x => x.id === id);
-        
-        // Controleert op de structuur: ik, verbalisant [Naam], ...
         const ikVormCheck = /^ik,\s+verbalisant\s+[a-z\.\s]+,\s+/.test(input);
-        
-        // Controleert of alle keywords (stijlfouten en feiten) aanwezig zijn
-        // Voor de tijd checken we alleen op "11:" om variaties rond 11:00 uur toe te staan
-        const allChecksPassed = item.check.every(term => input.includes(term));
+        const allChecks = item.check.every(t => input.includes(t));
 
-        if (ikVormCheck && allChecksPassed) {
+        if (ikVormCheck && allChecks) {
             const block = document.getElementById(`item-${id}`);
             block.classList.replace('locked', 'unlocked');
             block.draggable = true;
             el.disabled = true;
             el.style.background = "#f0fdf4";
-            
-            block.ondragstart = (e) => {
-                e.dataTransfer.setData('id', id);
-                e.dataTransfer.setData('type', item.type);
-            };
+            block.ondragstart = (e) => { e.dataTransfer.setData('id', id); e.dataTransfer.setData('type', item.type); };
         }
     };
 
@@ -188,10 +179,8 @@
             if (type === zone.dataset.type) {
                 zone.appendChild(document.getElementById(`item-${id}`));
                 zone.classList.add('correct-drop');
-                const progress = Math.round((document.querySelectorAll('.correct-drop').length / 5) * 100);
-                update(ref(db, userPath), { progress: progress });
-            } else {
-                alert("Incorrecte plaatsing binnen het ASTMA-model.");
+                const p = Math.round((document.querySelectorAll('.correct-drop').length / 5) * 100);
+                update(ref(db, userPath), { progress: p });
             }
         };
     });
