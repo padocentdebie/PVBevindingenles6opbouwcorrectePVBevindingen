@@ -2,56 +2,42 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>GGP ASTMA Analyse - Casus Drachten</title>
+    <title>GGP ASTMA Analyse - Verbeterde Versie</title>
     <style>
         :root { --police-blue: #1c2b4a; --text-gray: #334155; --border-color: #cbd5e1; --success-green: #10b981; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: var(--text-gray); margin: 0; padding: 40px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: var(--text-gray); margin: 0; padding: 20px; }
         
-        /* Login */
-        .login-container { max-width: 400px; margin: 60px auto; background: white; padding: 40px; border: 1px solid var(--border-color); border-radius: 4px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
-        h2 { color: var(--police-blue); font-weight: 600; margin-top: 0; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 4px; box-sizing: border-box; }
-        
-        /* Layout */
         .main-content { display: grid; grid-template-columns: 480px 1fr; gap: 40px; max-width: 1500px; margin: 0 auto; }
         .hidden { display: none !important; }
 
         /* Instructie */
-        .instruction-box { grid-column: 1 / -1; background: white; padding: 25px; margin-bottom: 30px; border: 1px solid var(--border-color); border-left: 5px solid var(--police-blue); line-height: 1.6; }
+        .instruction-box { grid-column: 1 / -1; background: white; padding: 25px; margin-bottom: 20px; border: 1px solid var(--border-color); border-left: 5px solid var(--police-blue); border-radius: 8px; }
         
         /* Kolommen */
-        .source-list { background: #eff6ff; padding: 25px; border: 1px solid var(--border-color); border-radius: 4px; min-height: 900px; }
-        .draggable-item { background: white; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 25px; border-radius: 4px; font-size: 0.95rem; line-height: 1.7; }
-        .locked { border-left: 5px solid #ef4444; }
-        .unlocked { border-left: 5px solid var(--success-green); cursor: grab; }
+        .source-list { background: #eff6ff; padding: 25px; border: 1px solid var(--border-color); border-radius: 12px; min-height: 800px; }
+        .draggable-item { background: white; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 25px; border-radius: 8px; transition: all 0.3s; }
+        .locked { border-left: 8px solid #ef4444; opacity: 0.9; }
+        .unlocked { border-left: 8px solid var(--success-green); cursor: grab; transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
         
-        .target-zones { display: flex; flex-direction: column; gap: 20px; }
-        .drop-zone { background: white; border: 2px dashed var(--border-color); padding: 40px 25px; border-radius: 4px; position: relative; min-height: 120px; }
-        .drop-zone-label { font-weight: bold; color: var(--police-blue); margin-bottom: 15px; display: block; text-transform: uppercase; letter-spacing: 1.5px; font-size: 0.9rem; }
+        .target-zones { display: flex; flex-direction: column; gap: 15px; }
+        .drop-zone { background: white; border: 2px dashed var(--border-color); padding: 30px; border-radius: 12px; transition: 0.3s; }
+        .drop-zone-label { font-weight: bold; color: var(--police-blue); display: block; text-transform: uppercase; margin-bottom: 10px; font-size: 0.8rem; }
         .correct-drop { border: 2px solid var(--success-green); background: #f0fdf4; }
 
+        .btn { background: var(--police-blue); color: white; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
+        textarea { width: 100%; height: 90px; margin-top: 15px; border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; resize: none; font-size: 0.85rem; transition: 0.3s; }
+        
         /* Leaderboard */
-        .leaderboard { grid-column: 1 / -1; margin-top: 50px; background: white; padding: 30px; border: 1px solid var(--border-color); border-radius: 4px; }
-        .leader-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .leader-table th, .leader-table td { text-align: left; padding: 15px; border-bottom: 1px solid #edf2f7; }
-        .progress-bar { background: #edf2f7; height: 10px; border-radius: 5px; width: 100%; max-width: 300px; }
+        .leaderboard { grid-column: 1 / -1; margin-top: 30px; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .progress-bar { background: #edf2f7; height: 10px; border-radius: 5px; width: 200px; }
         .progress-fill { background: var(--success-green); height: 100%; border-radius: 5px; transition: width 0.5s; }
-
-        .correctiemodel-box { grid-column: 1 / -1; margin-top: 20px; padding: 20px; background: #f1f5f9; border-radius: 4px; display: none; }
-        .btn-model { background: none; border: 1px dashed var(--police-blue); color: var(--police-blue); cursor: pointer; padding: 5px 10px; font-size: 0.8rem; margin-top: 10px; }
-
-        .btn { background: var(--police-blue); color: white; padding: 14px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 1.1rem; width: 100%; font-weight: 600; }
-        textarea { width: 100%; height: 100px; margin-top: 20px; border: 1px solid var(--border-color); padding: 15px; box-sizing: border-box; resize: none; font-family: inherit; font-size: 0.9rem; border-radius: 4px; }
     </style>
 </head>
 <body>
 
-<div id="login-screen" class="login-container">
-    <h2>GGP Oefenomgeving</h2>
-    <label>Naam student</label>
-    <input type="text" id="student-name" placeholder="Voornaam Achternaam">
-    <label>Klas</label>
+<div id="login-screen" style="max-width:400px; margin: 100px auto; background:white; padding:40px; border-radius:12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+    <h2 style="color:var(--police-blue)">GGP Training</h2>
+    <input type="text" id="student-name" placeholder="Naam Student">
     <select id="student-class">
         <option value="Klas_Alfa">Klas Alfa</option>
         <option value="Klas_Bravo">Klas Bravo</option>
@@ -60,48 +46,37 @@
         <option value="Klas_Echo">Klas Echo</option>
         <option value="Klas_Foxtrot">Klas Foxtrot</option>
         <option value="Klas_Golf">Klas Golf</option>
+        <option value="Klas_Hotel">Klas Hotel</option>
         <option value="Klas_Juliett">Klas Juliett</option>
         <option value="Klas_Kilo">Klas Kilo</option>
         <option value="Klas_Lima">Klas Lima</option>
         <option value="Klas_Mike">Klas Mike</option>
     </select>
-    <button class="btn" onclick="startOefening()">Start Analyse</button>
+    <button class="btn" onclick="startOefening()">Start Challenge</button>
+</div>
+    <button class="btn" onclick="startOefening()">Start Challenge</button>
 </div>
 
 <div id="exercise-screen" class="main-content hidden">
     <div class="instruction-box">
-        <strong>Instructie: Proces-verbaal Analyse & Individualisering</strong><br>
-        1. <strong>Analyseer:</strong> Spoor de foutieve zin, vage tijd of onjuiste tijdsvorm op.<br>
-        2. <strong>Verleden tijd:</strong> Let op! Veranderlijke zaken (zoals witte sneeuw) beschrijf je in de <strong>verleden tijd</strong>.<br>
-        3. <strong>Herschrijf:</strong> Gebruik de verplichte vorm: <i>ik, verbalisant [Je Naam], ...</i><br>
-        4. <strong>Indelen:</strong> Sleep het groene blok naar de juiste ASTMA-fase.
+        <strong>💡 Milde beoordeling actief:</strong> Herschrijf de tekst. Zorg dat je <b>"ik"</b> en <b>"verbalisant"</b> gebruikt. Verbeter de stijlfouten (tautologie/pleonasme) en let op de <b>verleden tijd (OVT)</b> waar nodig.
     </div>
 
     <div id="chaos-column" class="source-list">
-        <h3 style="margin: 0 0 25px 0; color: var(--police-blue);">Ongeordende Bevindingen</h3>
+        <h3 style="margin-top:0; color:var(--police-blue);">Bevindingen</h3>
     </div>
 
     <div class="target-zones">
         <div class="drop-zone" data-type="A"><span class="drop-zone-label">A - Aanleiding</span></div>
-        <div class="drop-zone" data-type="S"><span class="drop-zone-label">S - Situatie (Veranderlijk in OVT)</span></div>
-        <div class="drop-zone" data-type="T"><span class="drop-zone-label">T - Toedracht (Waarneming in OVT)</span></div>
-        <div class="drop-zone" data-type="M"><span class="drop-zone-label">M - Maatregelen (Datum/Tijd verplicht)</span></div>
-        <div class="drop-zone" data-type="Af"><span class="drop-zone-label">A - Afhandeling (Datum/Tijd verplicht)</span></div>
+        <div class="drop-zone" data-type="S"><span class="drop-zone-label">S - Situatie (OVT!)</span></div>
+        <div class="drop-zone" data-type="T"><span class="drop-zone-label">T - Toedracht (OVT!)</span></div>
+        <div class="drop-zone" data-type="M"><span class="drop-zone-label">M - Maatregelen</span></div>
+        <div class="drop-zone" data-type="Af"><span class="drop-zone-label">A - Afhandeling</span></div>
     </div>
 
     <div class="leaderboard">
-        <h3 style="margin:0; color: var(--police-blue);">Live Leaderboard: <span id="class-display"></span></h3>
-        <table class="leader-table"><tbody id="leader-body"></tbody></table>
-        
-        <button class="btn-model" onclick="toggleModel()">Toon Correctiemodel (Docent)</button>
-        <div id="correctiemodel" class="correctiemodel-box">
-            <strong>Antwoordsleutel:</strong><br>
-            A: "ik, verbalisant [Naam], kreeg opdracht om de melder op te bellen..."<br>
-            S: "ik, verbalisant [Naam], zag dat er sneeuw op de klinkers <u>lag</u>..." (OVT!)<br>
-            T: "ik, verbalisant [Naam], zag dat Stout geld aannam... realiseerde zich niet..."<br>
-            M: "ik, verbalisant [Naam], vorderde op maandag 9 maart om 11:15 uur..."<br>
-            Af: "ik, verbalisant [Naam], maakte op maandag 9 maart om 11:30 uur..."
-        </div>
+        <h4 id="class-display"></h4>
+        <div id="leader-body"></div>
     </div>
 </div>
 
@@ -111,37 +86,37 @@
 
     const firebaseConfig = {
         apiKey: "AIzaSyC-Of0AUOd-kVo2RKxYc-68Gr-RO4HdRk0",
-        authDomain: "q2aangifteles2.firebaseapp.com",
         databaseURL: "https://q2aangifteles2-default-rtdb.europe-west1.firebasedatabase.app",
         projectId: "q2aangifteles2",
     };
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // DE MILDE DATA: Nu met alternatieven in Arrays
     const pvData = [
-        { id: 1, type: "A", text: "Op maandag 09 maart 2026 kregen wij de melding Sportlaan 7. Wij kregen de opdracht om de melder op te telefoneren over de situatie. Wij reden in een herkenbaar dienstvoertuig.", check: ["ik, verbalisant", "opbel"] },
-        { id: 2, type: "S", text: "De parkeervakken bevinden zich aan de noordzijde van perceel Sportlaan 7 te Drachten. Ter plaatse ligt witte sneeuw op de klinkers. Wij zagen dat een zwarte personenauto, merk Volkswagen, type Golf, geparkeerd stond.", check: ["ik, verbalisant", "lag", "zag"] },
-        { id: 3, type: "T", text: "Ter plaatse sprak ik de melder aan. Deze vertelde dat hij geld en zakjes zag worden uitgewisseld. Wij zagen dat de inzittende, J.J. STOUT, geld aannam. Stout leek zich niet te beseffen dat hij werd geobserveerd.", check: ["ik, verbalisant", "realise", "zag"] },
-        { id: 4, type: "M", text: "Stout maakte een zenuwachtige indruk. Kort daarna vorderden wij inzage in het identiteitsbewijs van de verdachte Stout. Vanwege de criminele misdaden uit het verleden hebben wij hem onderzocht.", check: ["ik, verbalisant", "maandag", "09 maart", "11:", "vorderde"] },
-        { id: 5, type: "Af", text: "De verdachte is ten spoedigste overgebracht naar het bureau Drachten. De USB-stick met beelden is voor altijd en eeuwig veiliggesteld. Wij maakten hiervan op ambtseed dit proces-verbaal op.", check: ["ik, verbalisant", "maandag", "09 maart", "11:", "maakte"] }
+        { id: 1, type: "A", text: "Wij kregen de opdracht om de melder op te telefoneren...", 
+          check: ["ik", "verbalisant", ["opbellen", "opbel", "telefoneer", "telefoneren"]] },
+        { id: 2, type: "S", text: "Ter plaatse ligt witte sneeuw op de klinkers...", 
+          check: ["ik", "verbalisant", "lag", "sneeuw"] }, // "Witte" weglaten is goed
+        { id: 3, type: "T", text: "...Stout leek zich niet te beseffen dat hij werd geobserveerd.", 
+          check: ["ik", "verbalisant", ["realise", "besefte", "besef "], "zag"] },
+        { id: 4, type: "M", text: "...vorderden wij inzage... vanwege de criminele misdaden...", 
+          check: ["ik", "verbalisant", ["misdaad", "misdrijf", "strafbare"], "maandag", "09 maart"] },
+        { id: 5, type: "Af", text: "...veiliggesteld voor altijd en eeuwig.", 
+          check: ["ik", "verbalisant", ["altijd", "eeuwig"], "maandag", "09 maart"] }
     ];
 
     let userPath = "";
 
-    window.toggleModel = () => {
-        const m = document.getElementById('correctiemodel');
-        m.style.display = m.style.display === 'block' ? 'none' : 'block';
-    };
-
     window.startOefening = () => {
         const name = document.getElementById('student-name').value;
         const klas = document.getElementById('student-class').value;
-        if (!name) return alert("Naam invullen.");
+        if (!name) return alert("Naam?");
 
         userPath = `ggp_sessie/${klas}/${name.replace(/\s+/g, '_')}`;
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('exercise-screen').classList.remove('hidden');
-        document.getElementById('class-display').innerText = klas.replace('_', ' ');
+        document.getElementById('class-display').innerText = `Klas: ${klas}`;
 
         set(ref(db, userPath), { name: name, progress: 0 });
 
@@ -150,7 +125,8 @@
             const div = document.createElement('div');
             div.className = 'draggable-item locked';
             div.id = `item-${item.id}`;
-            div.innerHTML = `<div>${item.text}</div><textarea oninput="valideer(this, ${item.id})"></textarea>`;
+            div.innerHTML = `<div style="font-size:0.8rem; color:#64748b; margin-bottom:10px;">${item.text}</div>
+                             <textarea placeholder="Herschrijf hier..." oninput="window.valideer(this, ${item.id})"></textarea>`;
             container.appendChild(div);
         });
 
@@ -159,7 +135,11 @@
             const body = document.getElementById('leader-body');
             body.innerHTML = "";
             if (data) Object.values(data).sort((a,b)=>b.progress-a.progress).forEach(s => {
-                body.innerHTML += `<tr><td>${s.name}</td><td><div class="progress-bar"><div class="progress-fill" style="width:${s.progress}%"></div></div></td><td>${s.progress}%</td></tr>`;
+                body.innerHTML += `<div style="display:flex; align-items:center; gap:10px; margin-bottom:5px; font-size:0.8rem;">
+                    <div style="width:100px;">${s.name}</div>
+                    <div class="progress-bar"><div class="progress-fill" style="width:${s.progress}%"></div></div>
+                    <div>${s.progress}%</div>
+                </div>`;
             });
         });
     };
@@ -167,16 +147,27 @@
     window.valideer = (el, id) => {
         const input = el.value.toLowerCase().trim();
         const item = pvData.find(x => x.id === id);
-        const ikVormCheck = /^ik,\s+verbalisant\s+[a-z\.\s]+,\s+/.test(input);
-        const allChecks = item.check.every(t => input.includes(t));
+        
+        // MILDE LOGICA: Controleer alle eisen
+        const allChecksPassed = item.check.every(condition => {
+            if (Array.isArray(condition)) {
+                return condition.some(alt => input.includes(alt.toLowerCase()));
+            }
+            return input.includes(condition.toLowerCase());
+        });
 
-        if (ikVormCheck && allChecks) {
+        if (allChecksPassed) {
             const block = document.getElementById(`item-${id}`);
             block.classList.replace('locked', 'unlocked');
             block.draggable = true;
             el.disabled = true;
             el.style.background = "#f0fdf4";
-            block.ondragstart = (e) => { e.dataTransfer.setData('id', id); e.dataTransfer.setData('type', item.type); };
+            el.style.borderColor = "#10b981";
+            
+            block.ondragstart = (e) => { 
+                e.dataTransfer.setData('id', id); 
+                e.dataTransfer.setData('type', item.type); 
+            };
         }
     };
 
@@ -190,6 +181,8 @@
                 zone.classList.add('correct-drop');
                 const p = Math.round((document.querySelectorAll('.correct-drop').length / 5) * 100);
                 update(ref(db, userPath), { progress: p });
+            } else {
+                alert("Verkeerde fase! Kijk goed naar ASTMA.");
             }
         };
     });
