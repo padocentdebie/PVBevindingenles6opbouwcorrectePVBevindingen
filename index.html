@@ -2,44 +2,47 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>GGP ASTMA Analyse - Verbeterde Versie</title>
+    <title>GGP ASTMA - Professioneel PV Training</title>
     <style>
-        :root { --police-blue: #1c2b4a; --text-gray: #334155; --border-color: #cbd5e1; --success-green: #10b981; }
+        :root { --police-blue: #1c2b4a; --text-gray: #334155; --border-color: #cbd5e1; --success-green: #10b981; --alert-red: #ef4444; }
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8fafc; color: var(--text-gray); margin: 0; padding: 20px; }
         
-        .main-content { display: grid; grid-template-columns: 480px 1fr; gap: 40px; max-width: 1500px; margin: 0 auto; }
+        .main-content { display: grid; grid-template-columns: 480px 1fr; gap: 40px; max-width: 1600px; margin: 0 auto; }
         .hidden { display: none !important; }
 
         /* Instructie */
-        .instruction-box { grid-column: 1 / -1; background: white; padding: 25px; margin-bottom: 20px; border: 1px solid var(--border-color); border-left: 5px solid var(--police-blue); border-radius: 8px; }
+        .instruction-box { grid-column: 1 / -1; background: white; padding: 20px; margin-bottom: 20px; border-left: 5px solid var(--police-blue); border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         
         /* Kolommen */
         .source-list { background: #eff6ff; padding: 25px; border: 1px solid var(--border-color); border-radius: 12px; min-height: 800px; }
-        .draggable-item { background: white; border: 1px solid var(--border-color); padding: 20px; margin-bottom: 25px; border-radius: 8px; transition: all 0.3s; }
-        .locked { border-left: 8px solid #ef4444; opacity: 0.9; }
-        .unlocked { border-left: 8px solid var(--success-green); cursor: grab; transform: scale(1.02); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .draggable-item { background: white; border: 1px solid var(--border-color); padding: 15px; margin-bottom: 20px; border-radius: 8px; border-left: 6px solid var(--alert-red); transition: 0.3s; }
+        .unlocked { border-left-color: var(--success-green); cursor: grab; transform: scale(1.01); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
         
         .target-zones { display: flex; flex-direction: column; gap: 15px; }
-        .drop-zone { background: white; border: 2px dashed var(--border-color); padding: 30px; border-radius: 12px; transition: 0.3s; }
-        .drop-zone-label { font-weight: bold; color: var(--police-blue); display: block; text-transform: uppercase; margin-bottom: 10px; font-size: 0.8rem; }
+        .drop-zone { background: white; border: 2px dashed var(--border-color); padding: 25px; border-radius: 12px; transition: 0.3s; min-height: 120px; }
+        .drop-zone-label { font-weight: bold; color: var(--police-blue); text-transform: uppercase; font-size: 0.8rem; margin-bottom: 10px; display: block; }
         .correct-drop { border: 2px solid var(--success-green); background: #f0fdf4; }
 
-        .btn { background: var(--police-blue); color: white; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; }
-        textarea { width: 100%; height: 90px; margin-top: 15px; border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; resize: none; font-size: 0.85rem; transition: 0.3s; }
-        
-        /* Leaderboard */
-        .leaderboard { grid-column: 1 / -1; margin-top: 30px; background: white; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
-        .progress-bar { background: #edf2f7; height: 10px; border-radius: 5px; width: 200px; }
-        .progress-fill { background: var(--success-green); height: 100%; border-radius: 5px; transition: width 0.5s; }
+        /* Knoppen & Input */
+        .btn { background: var(--police-blue); color: white; padding: 14px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn:hover { background: #2a3d66; }
+        textarea { width: 100%; height: 90px; margin-top: 10px; border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; resize: none; font-size: 0.85rem; }
+        .tip-txt { color: var(--alert-red); font-size: 0.75rem; margin-top: 5px; font-weight: bold; min-height: 1rem; }
+
+        /* Peer Feedback */
+        .feedback-section { grid-column: 1 / -1; margin-top: 40px; padding-top: 20px; border-top: 2px solid var(--border-color); }
+        .peer-card { background: white; border: 1px solid var(--border-color); padding: 15px; border-radius: 8px; margin-bottom: 15px; display: grid; grid-template-columns: 1fr 350px; gap: 20px; }
+        .feedback-controls { display: flex; flex-direction: column; gap: 8px; }
+        .feedback-controls input { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-<div id="login-screen" style="max-width:400px; margin: 100px auto; background:white; padding:40px; border-radius:12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-    <h2 style="color:var(--police-blue)">GGP Training</h2>
-    <input type="text" id="student-name" placeholder="Naam Student">
-    <select id="student-class">
-        <option value="Klas_Alfa">Klas Alfa</option>
+<div id="login-screen" style="max-width:400px; margin: 100px auto; background:white; padding:40px; border-radius:12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);">
+    <h2 style="color:var(--police-blue); margin-top:0;">GGP PV Training</h2>
+    <input type="text" id="student-name" placeholder="Je volledige naam" style="width:100%; padding:12px; margin-bottom:10px; border:1-px solid #ccc; border-radius:4px;">
+    <select id="student-class" style="width:100%; padding:12px; margin-bottom:20px; border:1px solid #ccc; border-radius:4px;">
+        <option value="Klas_Alpha">Klas Alpha</option>
         <option value="Klas_Bravo">Klas Bravo</option>
         <option value="Klas_Charlie">Klas Charlie</option>
         <option value="Klas_Delta">Klas Delta</option>
@@ -47,6 +50,7 @@
         <option value="Klas_Foxtrot">Klas Foxtrot</option>
         <option value="Klas_Golf">Klas Golf</option>
         <option value="Klas_Hotel">Klas Hotel</option>
+        <option value="Klas_India">Klas India</option>
         <option value="Klas_Juliett">Klas Juliett</option>
         <option value="Klas_Kilo">Klas Kilo</option>
         <option value="Klas_Lima">Klas Lima</option>
@@ -54,29 +58,31 @@
     </select>
     <button class="btn" onclick="startOefening()">Start Challenge</button>
 </div>
-    <button class="btn" onclick="startOefening()">Start Challenge</button>
-</div>
 
-<div id="exercise-screen" class="main-content hidden">
+<div id="exercise-screen" class="hidden">
     <div class="instruction-box">
-        <strong>💡 Milde beoordeling actief:</strong> Herschrijf de tekst. Zorg dat je <b>"ik"</b> en <b>"verbalisant"</b> gebruikt. Verbeter de stijlfouten (tautologie/pleonasme) en let op de <b>verleden tijd (OVT)</b> waar nodig.
+        <strong>💡 Richtlijnen:</strong> Gebruik de <b>OVT</b> (vorderde, trapte, bevond). Voeg een <b>datum en tijd</b> toe. 
+        In de <b>Situatie (S)</b> géén redenen van wetenschap. In de <b>Toedracht (T)</b> juist wel (ik zag/rook). 
+        Geef klasgenoten onderaan <b>Tips & Tops</b>!
     </div>
 
-    <div id="chaos-column" class="source-list">
-        <h3 style="margin-top:0; color:var(--police-blue);">Bevindingen</h3>
-    </div>
+    <div class="main-content">
+        <div id="chaos-column" class="source-list">
+            <h3 style="margin-top:0; color:var(--police-blue);">Bevindingen</h3>
+        </div>
 
-    <div class="target-zones">
-        <div class="drop-zone" data-type="A"><span class="drop-zone-label">A - Aanleiding</span></div>
-        <div class="drop-zone" data-type="S"><span class="drop-zone-label">S - Situatie (OVT!)</span></div>
-        <div class="drop-zone" data-type="T"><span class="drop-zone-label">T - Toedracht (OVT!)</span></div>
-        <div class="drop-zone" data-type="M"><span class="drop-zone-label">M - Maatregelen</span></div>
-        <div class="drop-zone" data-type="Af"><span class="drop-zone-label">A - Afhandeling</span></div>
-    </div>
+        <div class="target-zones">
+            <div class="drop-zone" data-type="A"><span class="drop-zone-label">A - Aanleiding</span></div>
+            <div class="drop-zone" data-type="S"><span class="drop-zone-label">S - Situatie (Decor / Geen Wetenschap)</span></div>
+            <div class="drop-zone" data-type="T"><span class="drop-zone-label">T - Toedracht (Wetenschap + Bestanddelen)</span></div>
+            <div class="drop-zone" data-type="M"><span class="drop-zone-label">M - Maatregelen</span></div>
+            <div class="drop-zone" data-type="Af"><span class="drop-zone-label">A - Afhandeling (Cautie / Transport)</span></div>
+        </div>
 
-    <div class="leaderboard">
-        <h4 id="class-display"></h4>
-        <div id="leader-body"></div>
+        <div class="feedback-section">
+            <h3>Peer-Feedback (Tips & Tops)</h3>
+            <div id="peer-list"></div>
+        </div>
     </div>
 </div>
 
@@ -92,82 +98,72 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // DE MILDE DATA: Nu met alternatieven in Arrays
     const pvData = [
-        { id: 1, type: "A", text: "Wij kregen de opdracht om de melder op te telefoneren...", 
-          check: ["ik", "verbalisant", ["opbellen", "opbel", "telefoneer", "telefoneren"]] },
-        { id: 2, type: "S", text: "Ter plaatse ligt witte sneeuw op de klinkers...", 
-          check: ["ik", "verbalisant", "lag", "sneeuw"] }, // "Witte" weglaten is goed
-        { id: 3, type: "T", text: "...Stout leek zich niet te beseffen dat hij werd geobserveerd.", 
-          check: ["ik", "verbalisant", ["realise", "besefte", "besef "], "zag"] },
-        { id: 4, type: "M", text: "...vorderden wij inzage... vanwege de criminele misdaden...", 
-          check: ["ik", "verbalisant", ["misdaad", "misdrijf", "strafbare"], "maandag", "09 maart"] },
-        { id: 5, type: "Af", text: "...veiliggesteld voor altijd en eeuwig.", 
-          check: ["ik", "verbalisant", ["altijd", "eeuwig"], "maandag", "09 maart"] }
+        { id: 1, type: "A", text: "Opdracht melder Jan Jansen, geb. 12-05-1985 te Amsterdam.", check: ["ik", "verbalisant", ["kreeg", "verzocht"]] },
+        { id: 2, type: "S", text: "Ter plaatse klinkers en rode fiets tegen lantaarnpaal.", check: ["klinkers", "rode fiets", "lantaarnpaal", ["bevond", "stond", "was"]], antiCheck: ["zag", "hoorde", "nam", "rook"], tip: "Situatie (S): Géén redenen van wetenschap!" },
+        { id: 3, type: "T", text: "Stout heeft gedronken, wankelt en heeft blikje bier. Hij trapt tegen rode fiets, lamp stuk.", forbidden: ["blikje bier"], check: ["ik", "verbalisant", ["zag", "rook", "waarnam"], "opzettelijk", "wederrechtelijk", "onvaste gang", "opschrift"] },
+        { id: 4, type: "M", text: "Inzage ID gevorderd.", check: ["ik", "verbalisant", "vorderde"] },
+        { id: 5, type: "Af", text: "Stout aangehouden (vernieling). Niet-meewerkend. Fouillering (niks gevonden). Naar bureau.", check: ["niet tot antwoorden verplicht", "vernieling", "transportfouillering", "niets aangetroffen", "vertrek", "aankomst"] }
     ];
 
-    let userPath = "";
+    let myName = "";
+    let myClass = "";
 
     window.startOefening = () => {
-        const name = document.getElementById('student-name').value;
-        const klas = document.getElementById('student-class').value;
-        if (!name) return alert("Naam?");
+        myName = document.getElementById('student-name').value;
+        myClass = document.getElementById('student-class').value;
+        if (!myName) return alert("Naam?");
 
-        userPath = `ggp_sessie/${klas}/${name.replace(/\s+/g, '_')}`;
         document.getElementById('login-screen').classList.add('hidden');
         document.getElementById('exercise-screen').classList.remove('hidden');
-        document.getElementById('class-display').innerText = `Klas: ${klas}`;
-
-        set(ref(db, userPath), { name: name, progress: 0 });
 
         const container = document.getElementById('chaos-column');
         pvData.sort(() => Math.random() - 0.5).forEach(item => {
             const div = document.createElement('div');
-            div.className = 'draggable-item locked';
+            div.className = 'draggable-item';
             div.id = `item-${item.id}`;
-            div.innerHTML = `<div style="font-size:0.8rem; color:#64748b; margin-bottom:10px;">${item.text}</div>
-                             <textarea placeholder="Herschrijf hier..." oninput="window.valideer(this, ${item.id})"></textarea>`;
+            div.innerHTML = `<small style="color:#64748b; font-style:italic;">${item.text}</small>
+                             <textarea placeholder="Herschrijf professioneel..." oninput="window.valideer(this, ${item.id})"></textarea>
+                             <div id="tip-${item.id}" class="tip-txt"></div>`;
             container.appendChild(div);
         });
 
-        onValue(ref(db, `ggp_sessie/${klas}`), (snap) => {
-            const data = snap.val();
-            const body = document.getElementById('leader-body');
-            body.innerHTML = "";
-            if (data) Object.values(data).sort((a,b)=>b.progress-a.progress).forEach(s => {
-                body.innerHTML += `<div style="display:flex; align-items:center; gap:10px; margin-bottom:5px; font-size:0.8rem;">
-                    <div style="width:100px;">${s.name}</div>
-                    <div class="progress-bar"><div class="progress-fill" style="width:${s.progress}%"></div></div>
-                    <div>${s.progress}%</div>
-                </div>`;
-            });
-        });
+        loadPeerData();
     };
 
     window.valideer = (el, id) => {
         const input = el.value.toLowerCase().trim();
         const item = pvData.find(x => x.id === id);
-        
-        // MILDE LOGICA: Controleer alle eisen
-        const allChecksPassed = item.check.every(condition => {
-            if (Array.isArray(condition)) {
-                return condition.some(alt => input.includes(alt.toLowerCase()));
-            }
-            return input.includes(condition.toLowerCase());
-        });
+        const tipEl = document.getElementById(`tip-${id}`);
+        const block = document.getElementById(`item-${id}`);
+        let missing = [];
 
-        if (allChecksPassed) {
-            const block = document.getElementById(`item-${id}`);
-            block.classList.replace('locked', 'unlocked');
+        // Generieke Tijd/Datum check
+        const hasTime = /(uur|\d{2}:\d{2})/.test(input);
+        const hasMonth = /(jan|feb|maa|apr|mei|jun|jul|aug|sep|okt|nov|dec)/.test(input);
+        const hasYear = /202\d/.test(input);
+        if(!hasTime || !hasMonth || !hasYear) missing.push("dag/datum/tijd");
+
+        // Specifieke blok checks
+        if(item.antiCheck && item.antiCheck.some(w => input.includes(w))) { tipEl.innerText = item.tip; return; }
+        if(item.forbidden && item.forbidden.some(w => input.includes(w))) { tipEl.innerText = "⚠️ Geen aannames (blikje bier)!"; return; }
+        
+        const contentMatch = item.check.some(c => Array.isArray(c) ? c.some(a => input.includes(a)) : input.includes(c));
+        if(!contentMatch) missing.push("inhoudelijke eisen");
+
+        if(missing.length === 0) {
+            tipEl.innerText = "✅ Tekst goedgekeurd!";
+            block.classList.add('unlocked');
             block.draggable = true;
-            el.disabled = true;
-            el.style.background = "#f0fdf4";
-            el.style.borderColor = "#10b981";
-            
             block.ondragstart = (e) => { 
                 e.dataTransfer.setData('id', id); 
                 e.dataTransfer.setData('type', item.type); 
+                e.dataTransfer.setData('txt', el.value); 
             };
+        } else {
+            tipEl.innerText = "Nodig: " + missing.join(", ");
+            block.classList.remove('unlocked');
+            block.draggable = false;
         }
     };
 
@@ -176,16 +172,52 @@
         zone.ondrop = e => {
             const id = e.dataTransfer.getData('id');
             const type = e.dataTransfer.getData('type');
-            if (type === zone.dataset.type) {
+            const txt = e.dataTransfer.getData('txt');
+            if(type === zone.dataset.type) {
                 zone.appendChild(document.getElementById(`item-${id}`));
                 zone.classList.add('correct-drop');
-                const p = Math.round((document.querySelectorAll('.correct-drop').length / 5) * 100);
-                update(ref(db, userPath), { progress: p });
+                set(ref(db, `ggp_peer/${myClass}/${myName.replace(/\s+/g, '_')}/${type}`), { text: txt, tip: "", top: "" });
             } else {
-                alert("Verkeerde fase! Kijk goed naar ASTMA.");
+                alert("Verkeerde ASTMA fase!");
             }
         };
     });
+
+    function loadPeerData() {
+        onValue(ref(db, `ggp_peer/${myClass}`), (snap) => {
+            const list = document.getElementById('peer-list');
+            list.innerHTML = "";
+            const data = snap.val();
+            if(!data) return;
+
+            for(let sName in data) {
+                if(sName === myName.replace(/\s+/g, '_')) continue;
+                for(let fase in data[sName]) {
+                    const entry = data[sName][fase];
+                    list.innerHTML += `
+                        <div class="peer-card">
+                            <div>
+                                <strong>Student: ${sName.replace(/_/g, ' ')} | Fase: ${fase}</strong>
+                                <p style="background:#f1f5f9; padding:10px; border-radius:6px; font-size:0.85rem;">${entry.text}</p>
+                                <small><b>Feedback:</b> Top: ${entry.top || "-"} | Tip: ${entry.tip || "-"}</small>
+                            </div>
+                            <div class="feedback-controls">
+                                <input type="text" id="top-${sName}-${fase}" placeholder="Top...">
+                                <input type="text" id="tip-${sName}-${fase}" placeholder="Tip...">
+                                <button class="btn" style="padding:5px;" onclick="window.sendFeedback('${sName}','${fase}')">Feedback Opslaan</button>
+                            </div>
+                        </div>`;
+                }
+            }
+        });
+    }
+
+    window.sendFeedback = (sName, fase) => {
+        const top = document.getElementById(`top-${sName}-${fase}`).value;
+        const tip = document.getElementById(`tip-${sName}-${fase}`).value;
+        update(ref(db, `ggp_peer/${myClass}/${sName}/${fase}`), { top: top, tip: tip });
+        alert("Feedback verzonden!");
+    };
 </script>
 </body>
 </html>
